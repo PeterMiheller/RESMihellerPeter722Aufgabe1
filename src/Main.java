@@ -87,6 +87,10 @@ public class Main {
                 .map(record -> record.getHeld()).forEach(System.out::println);
 
     }
+    public static void galacticConfruntation(List<Hero> cases) {
+        System.out.println("\nAll galactic confruntation: ");
+        cases.stream().filter(c -> c.getKonfrontationstyp().equals("Galaktisch")).sorted(Comparator.comparing(Hero::getDate).reversed()).map(c -> c.getDate() + ": " + c.getHeld() + " - vs : " + c.getAntagonist()).forEach(System.out::println);
+    }
 
 
 
