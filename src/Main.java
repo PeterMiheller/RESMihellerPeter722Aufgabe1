@@ -28,6 +28,7 @@ public class Main {
 
         gamesCapacity(events);
         galacticConfruntation(events);
+        casesPerKonfrontation(events);
 
 
     }
@@ -91,6 +92,35 @@ public class Main {
         System.out.println("\nAll galactic confruntation: ");
         cases.stream().filter(c -> c.getKonfrontationstyp().equals("Galaktisch")).sorted(Comparator.comparing(Hero::getDate).reversed()).map(c -> c.getDate() + ": " + c.getHeld() + " - vs : " + c.getAntagonist()).forEach(System.out::println);
     }
+
+    public static void casesPerKonfrontation(List<Hero> cases) {
+        Map<String, Integer> numberCases = new HashMap<>();
+        for (Hero c : cases) {
+            String hospital = c.getKonfrontationstyp();
+            numberCases.put(hospital, numberCases.getOrDefault(hospital, 0) + 1);
+        }
+
+        List<Map.Entry<String, Integer>> sortedCases = numberCases.entrySet().stream().sorted((c1, c2) -> {
+            int countCompare = Integer.compare(c2.getValue(), c1.getValue());//absteigend
+            if (countCompare == 0) {// 0 inseamna ca sunt egale valorile
+                return c1.getKey().compareTo(c2.getKey());// Ascending by city name
+            }
+            return countCompare;
+        }).toList();
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/bericht_konfrontationen.txt"))) {
+            for (Map.Entry<String, Integer> entry : sortedCases) {
+                bw.write(entry.getKey() + "&" + entry.getValue());
+                bw.newLine();
+            }
+            System.out.println("\n saved to 'bericht_konfrontationen.txt'.");
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+
+    }
+
+
 
 
 
