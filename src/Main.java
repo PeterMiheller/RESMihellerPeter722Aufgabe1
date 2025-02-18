@@ -26,8 +26,8 @@ public class Main {
         String filePath = System.getProperty("user.dir") + "\\src\\marvel_konfrontationen.xml";
         List<Hero> events = readXMLFile(filePath);
 
-
-
+        gamesCapacity(events);
+        galacticConfruntation(events);
 
 
     }
@@ -79,6 +79,16 @@ public class Main {
 
         return events;
     }
+    public static void gamesCapacity(List<Hero> heros) {
+        System.out.println("Enter a number: ");
+        Scanner scanner = new Scanner(System.in);
+        int inputCap = Integer.parseInt(scanner.nextLine());
+        heros.stream().filter(c -> c.getGlobalerEinfluss() >= inputCap).toList().stream()
+                .map(record -> record.getHeld()).forEach(System.out::println);
+
+    }
+
+
 
 
 
